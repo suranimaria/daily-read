@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chapter Sender</title>
+    <style>
+        #drop_zone {
+            border: 1px dashed ;
+            padding: 50px;
+            width: 100%;
+            text-align: center;
+            background-color: #D6DBDF ;
+            cursor: pointer;
+        }
+        .submit-btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .submit-btn:hover {
+            background-color: #D5F5E3;
+        }
+        
+    </style>
+</head>
+<body style="background-color: #AEB6BF">
+    <div style="width: 90%; margin: auto; margin-top: 50px">
+        <form ref='uploadForm' 
+              id='uploadForm' 
+              action='/upload' 
+              method='post' 
+              encType="multipart/form-data">
+            <div id="drop_zone">Drag & Drop your PDF here</div>
+            <br>
+            <input type="file" name="file" required style="display: none" id="fileInput"/><br>
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" required><br>
+            <input type='submit' value='Save changes' class='submit-btn' />
+        </form>     
+    </div>
+    
+    <script>
+        let dropZone = document.getElementById('drop_zone');
+        let fileInput = document.getElementById('fileInput');
+
+        // On drag over event, prevent default behavior.
+        dropZone.ondragover = function(event) {
+            event.preventDefault();
+            this.style.backgroundColor = '#D6EAF8';  // Change color on drag.
+        };
+
+        // On drop, capture the file.
+        dropZone.ondrop = function(event) {
+            event.preventDefault();
+            this.style.backgroundColor = '#D5F5E3';  // Revert color on drop.
+            this.innerHTML = 'Successfully added!'
+
+            fileInput.files = event.dataTransfer.files;
+        };
+
+        dropZone.onclick = function() {
+            fileInput.click();  // Trigger the hidden file input on click for a traditional file picker.
+        };
+    </script>
+</body>
+</html>
